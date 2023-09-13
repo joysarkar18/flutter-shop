@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.9.1
   email_validator: ^2.1.17
   lottie: ^2.6.0
+  icons_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:
