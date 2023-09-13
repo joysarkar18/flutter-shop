@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/Controllers/Authentication/authentication.dart';
 import 'package:flutter_shop/Views/Screens/HomeScreen/home_screen.dart';
+import 'package:flutter_shop/Views/Screens/SplashScreen/splash_screen.dart';
 import 'package:flutter_shop/firebase_options.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }

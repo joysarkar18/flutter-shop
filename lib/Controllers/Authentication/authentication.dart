@@ -32,8 +32,12 @@ class Authentication extends GetxController {
       Get.offAll(() => const Login());
     } else {
       userEmail.value = _auth.currentUser!.email.toString();
-
-      Get.offAll(() => HomeScreen());
+      Timer(
+        Duration(seconds: 2),
+        () {
+          Get.offAll(() => HomeScreen());
+        },
+      );
     }
   }
 
