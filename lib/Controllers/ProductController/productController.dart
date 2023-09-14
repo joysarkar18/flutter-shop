@@ -10,6 +10,10 @@ class ProductController extends GetxController {
   RxBool is_loading = false.obs;
   final _db = FirebaseFirestore.instance;
   RxList products = [].obs;
+  RxList cartProducts = [].obs;
+  RxInt totalPrice = 0.obs;
+
+  RxBool set = false.obs;
 
   getProducts() async {
     is_loading.value = true;
@@ -36,6 +40,80 @@ class ProductController extends GetxController {
             snackPosition: SnackPosition.BOTTOM,
             duration: Duration(seconds: 1));
       });
+    });
+  }
+
+  getCartProducts() async {
+    await _db
+        .collection("cartProducts")
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) {
+      cartProducts.value = value["cartItems"];
+    });
+  }
+
+  calculateTotalPrice() async {
+    await _db
+        .collection("cartProducts")
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) {
+      List l = value["cartItems"];
+      totalPrice.value = 0;
+
+      l.forEach((p) {
+        totalPrice.value +=
+            int.parse(p["price"].toString()) * int.parse(p["count"].toString());
+      });
+    });
+  }
+
+  increaseCount(int index) async {
+    await _db
+        .collection("cartProducts")
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) async {
+      List l = value["cartItems"];
+      l[index]["count"] = l[index]["count"] + 1;
+      await _db
+          .collection("cartProducts")
+          .doc(FirebaseAuth.instance.currentUser!.email.toString())
+          .update({"cartItems": l}).then((value) {
+        cartProducts.value = l;
+        calculateTotalPrice();
+      });
+    });
+  }
+
+  decreamentCount(int index) async {
+    await _db
+        .collection("cartProducts")
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) async {
+      List l = value["cartItems"];
+      l[index]["count"] = l[index]["count"] - 1;
+      await _db
+          .collection("cartProducts")
+          .doc(FirebaseAuth.instance.currentUser!.email.toString())
+          .update({"cartItems": l}).then((value) {
+        cartProducts.value = l;
+        calculateTotalPrice();
+      });
+    });
+  }
+
+  deleteProductFromCart(int index) async {
+    List l = cartProducts.value;
+    l.removeAt(index);
+    await _db
+        .collection("cartProducts")
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .update({"cartItems": l}).then((value) {
+      cartProducts.value = l;
+      set.value = !set.value;
     });
   }
 }

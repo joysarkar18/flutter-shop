@@ -31,7 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 print('HIII');
                 Get.to(() => ShoppingCart());
               },
-              icon: const Icon(Icons.shopping_cart_checkout_rounded))
+              icon: const Icon(Icons.shopping_cart_checkout_rounded)),
+          IconButton(
+              onPressed: () {
+                Authentication.instance.logOut();
+              },
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: SingleChildScrollView(

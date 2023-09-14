@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shop/Controllers/UserController/user_controller.dart';
 import 'package:flutter_shop/Views/Screens/HomeScreen/home_screen.dart';
 import 'package:flutter_shop/Views/Screens/Login&SignUp/login_screen.dart';
+import 'package:flutter_shop/Views/Screens/Login&SignUp/signup_screen.dart';
 import 'package:get/get.dart';
 
 class Authentication extends GetxController {
@@ -29,7 +30,7 @@ class Authentication extends GetxController {
 
   _setInitScreen(User? user) {
     if (user == null) {
-      Get.offAll(() => const Login());
+      Get.offAll(() => const SignUp());
     } else {
       userEmail.value = _auth.currentUser!.email.toString();
       Timer(
