@@ -12,17 +12,10 @@ class UserController extends GetxController {
   RxInt totalCoins = 0.obs;
 
   @override
-  void onReady() {
-    _db.collection("user").doc(firebaseUser!.email).get().then((value) {
-      totalCoins.value = value["coins"];
-    });
-  }
+  void onReady() {}
 
   createUserDataUsingSignin(String email) async {
-    await _db
-        .collection("user transactions")
-        .doc(email)
-        .set({"transactions": []});
+    await _db.collection("cartProducts").doc(email).set({"cartItems": []});
     await _db.collection("user").doc(email).set({
       "email": email,
     });

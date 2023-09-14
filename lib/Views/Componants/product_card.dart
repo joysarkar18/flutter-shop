@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/Controllers/ProductController/productController.dart';
+import 'package:flutter_shop/Models/cart_product.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
@@ -18,6 +20,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.put(ProductController());
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white70, width: 1),
@@ -43,10 +46,16 @@ class ProductCard extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                 ),
-                Icon(
-                  Icons.add_shopping_cart_rounded,
-                  size: 22,
-                  color: Colors.black54,
+                InkWell(
+                  onTap: () {
+                    productController.pushToCart(CartProduct(
+                        name, description, imgUrl, price, offer, 1));
+                  },
+                  child: Icon(
+                    Icons.add_shopping_cart_rounded,
+                    size: 22,
+                    color: Colors.black54,
+                  ),
                 )
               ],
             ),

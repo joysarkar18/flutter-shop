@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/Controllers/Authentication/authentication.dart';
 import 'package:flutter_shop/Controllers/Authentication/signupController.dart';
+import 'package:flutter_shop/Controllers/UserController/user_controller.dart';
 import 'package:flutter_shop/Views/Componants/glossy_card.dart';
 import 'package:flutter_shop/Views/Screens/Login&SignUp/login_screen.dart';
 
@@ -18,6 +19,7 @@ class _SignUpState extends State<SignUp> {
   bool equalOrnot = true;
   final Authentication authentication = Get.put(Authentication());
   final signupController = Get.put(SignupController());
+  final userController = Get.put(UserController());
   bool _isVisible1 = false;
   bool _isVisible2 = false;
   final fromKey = GlobalKey<FormState>();
@@ -259,6 +261,11 @@ class _SignUpState extends State<SignUp> {
                                                       .passwordController1.text,
                                                   signupController
                                                       .referalController.text);
+                                              userController
+                                                  .createUserDataUsingSignin(
+                                                      signupController
+                                                          .emailController
+                                                          .text);
                                             }
                                           }
                                         },
